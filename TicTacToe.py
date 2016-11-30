@@ -11,11 +11,47 @@ def tictactoe(buttons):
     if buttons["text"] == " " and bclick == True:
         buttons["text"] = "X"
         bclick = False
+        scoreChecker()
+        
     elif buttons ["text"] == " " and bclick == False:
         buttons ["text"] = "O"
         bclick = True
+        scoreChecker()
 
-    elif(button1["text"] == "X" and button2["text"] == "X" and button3["text"] == "X" or
+# First attempt at making a score checking system
+##    elif(button1["text"] == "X" and button2["text"] == "X" and button3["text"] == "X" or
+##         button1["text"] == "X" and button5["text"] == "X" and button9["text"] == "X" or
+##         button1["text"] == "X" and button4["text"] == "X" and button7["text"] == "X" or
+##         button4["text"] == "X" and button5["text"] == "X" and button6["text"] == "X" or
+##         button7["text"] == "X" and button8["text"] == "X" and button9["text"] == "X" or
+##         button3["text"] == "X" and button5["text"] == "X" and button7["text"] == "X" or
+##         button2["text"] == "X" and button5["text"] == "X" and button8["text"] == "X" or
+##         button3["text"] == "X" and button6["text"] == "X" and button9["text"] == "X" ):
+##         messagebox.showinfo("THE WINNER IS X","PLAYER X WON THE GAME")
+##         root.destroy()
+##
+##    elif(button1["text"] == "O" and button2["text"] == "O" and button3["text"] == "O" or
+##         button1["text"] == "O" and button5["text"] == "O" and button9["text"] == "O" or
+##         button1["text"] == "O" and button4["text"] == "O" and button7["text"] == "O" or
+##         button4["text"] == "O" and button5["text"] == "O" and button6["text"] == "O" or
+##         button7["text"] == "O" and button8["text"] == "O" and button9["text"] == "O" or
+##         button3["text"] == "O" and button5["text"] == "O" and button7["text"] == "O" or
+##         button2["text"] == "O" and button5["text"] == "O" and button8["text"] == "O" or
+##         button3["text"] == "O" and button6["text"] == "O" and button9["text"] == "O" ):
+##         messagebox.showinfo("THE WINNER IS O","PLAYER O WON THE GAME")
+##         root.destroy()
+##
+##    elif((button1["text"] == "O" or button1["text"] == "X") and (button2["text"] == "O" or
+##         button2["text"] == "X") and (button3["text"] == "O" or button3["text"] == "X") and
+##         (button4["text"] == "O" or button4["text"] == "X") and (button5["text"] == "O" or
+##         button5["text"] == "X") and (button6["text"] == "O" or button6["text"] == "X") and
+##         (button7["text"] == "O" or button7["text"] == "X") and (button8["text"] == "O" or
+##         button8["text"] == "X") and (button9["text"] == "O" or button9["text"] == "X") ):
+##         messagebox.showinfo("NOBODY WINS","THE GAME IS A TIE")
+##         root.destroy()
+
+def scoreChecker():
+    if(button1["text"] == "X" and button2["text"] == "X" and button3["text"] == "X" or
          button1["text"] == "X" and button5["text"] == "X" and button9["text"] == "X" or
          button1["text"] == "X" and button4["text"] == "X" and button7["text"] == "X" or
          button4["text"] == "X" and button5["text"] == "X" and button6["text"] == "X" or
@@ -23,28 +59,39 @@ def tictactoe(buttons):
          button3["text"] == "X" and button5["text"] == "X" and button7["text"] == "X" or
          button2["text"] == "X" and button5["text"] == "X" and button8["text"] == "X" or
          button3["text"] == "X" and button6["text"] == "X" and button9["text"] == "X" ):
-        break
-        messagebox.showinfo("THE WINNER IS X","PLAYER X WON THE GAME")
-
+         messagebox.showinfo("THE WINNER IS X","PLAYER X WON THE GAME")
+         clearBoard()
+         
     elif(button1["text"] == "O" and button2["text"] == "O" and button3["text"] == "O" or
-         button1["text"] == "O" and button5["text"] == "O" and button9["text"] == "O" or
-         button1["text"] == "O" and button4["text"] == "O" and button7["text"] == "O" or
-         button4["text"] == "O" and button5["text"] == "O" and button6["text"] == "O" or
-         button7["text"] == "O" and button8["text"] == "O" and button9["text"] == "O" or
-         button3["text"] == "O" and button5["text"] == "O" and button7["text"] == "O" or
-         button2["text"] == "O" and button5["text"] == "O" and button8["text"] == "O" or
-         button3["text"] == "O" and button6["text"] == "O" and button9["text"] == "O" ):
-         break
-         messagebox.showinfo("THE WINNER IS O","PLAYER O WON THE GAME")
-
-    elif(button1["text"] == "O" or button1["text"] == "X" and button2["text"] == "O" or
-         button2["text"] == "X" and button3["text"] == "O" or button3["text"] == "X" and
-         button4["text"] == "O" or button4["text"] == "X" and button5["text"] == "O" or
-         button5["text"] == "X" and button6["text"] == "O" or button6["text"] == "X" and
-         button7["text"] == "O" or button7["text"] == "X" and button8["text"] == "O" or
-         button8["text"] == "X" and button9["text"] == "O" or button9["text"] == "X" ):
-         break
+        button1["text"] == "O" and button5["text"] == "O" and button9["text"] == "O" or
+        button1["text"] == "O" and button4["text"] == "O" and button7["text"] == "O" or
+        button4["text"] == "O" and button5["text"] == "O" and button6["text"] == "O" or
+        button7["text"] == "O" and button8["text"] == "O" and button9["text"] == "O" or
+        button3["text"] == "O" and button5["text"] == "O" and button7["text"] == "O" or
+        button2["text"] == "O" and button5["text"] == "O" and button8["text"] == "O" or
+        button3["text"] == "O" and button6["text"] == "O" and button9["text"] == "O" ):
+        messagebox.showinfo("THE WINNER IS O","PLAYER O WON THE GAME")
+        clearBoard()
+         
+    elif((button1["text"] == "O" or button1["text"] == "X") and (button2["text"] == "O" or
+         button2["text"] == "X") and (button3["text"] == "O" or button3["text"] == "X") and
+         (button4["text"] == "O" or button4["text"] == "X") and (button5["text"] == "O" or
+         button5["text"] == "X") and (button6["text"] == "O" or button6["text"] == "X") and
+         (button7["text"] == "O" or button7["text"] == "X") and (button8["text"] == "O" or
+         button8["text"] == "X") and (button9["text"] == "O" or button9["text"] == "X") ):
          messagebox.showinfo("NOBODY WINS","THE GAME IS A TIE")
+         clearBoard()
+
+def clearBoard():
+    button1["text"] = " "
+    button2["text"] = " "
+    button3["text"] = " "
+    button4["text"] = " "
+    button5["text"] = " "
+    button6["text"] = " "
+    button7["text"] = " "
+    button8["text"] = " "
+    button9["text"] = " "
 
 
 buttons = StringVar()
