@@ -158,6 +158,7 @@ def serverConnectionWindowSettings():
         #Server settings connection code
         master.update()
         master.deiconify()
+        serverOptions.destroy()
 
 def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
