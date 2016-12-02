@@ -33,31 +33,31 @@ buttonsList = [" "," "," "," "," "," "," "," "," "] #Holds the value for each bu
 
 #Defining each button to be generated with tkinter
 
-button1 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button1,0))
+button1 = Button(frame, font = ('Arial 30 bold'), text = " ", height = 3, width = 6, command = lambda: tictactoe(button1,0))
 button1.grid(row = 1, column = 0)
 
-button2 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button2,1))
+button2 = Button(frame, font = ('Arial 30 bold'), text = " ", height = 3, width = 6, command = lambda: tictactoe(button2,1))
 button2.grid(row = 1, column = 1)
 
-button3 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button3,2))
+button3 = Button(frame, font = ('Arial 30 bold'), text = " ", height = 3, width = 6, command = lambda: tictactoe(button3,2))
 button3.grid(row = 1, column = 2)
 
-button4 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button4,3))
+button4 = Button(frame, font = ('Arial 30 bold'), text = " ", height = 3, width = 6, command = lambda: tictactoe(button4,3))
 button4.grid(row = 2, column = 0)
 
-button5 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button5,4))
+button5 = Button(frame, font = ('Arial 30 bold'), text = " ", height = 3, width = 6, command = lambda: tictactoe(button5,4))
 button5.grid(row = 2, column = 1)
 
-button6 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button6,5))
+button6 = Button(frame, font = ('Arial 30 bold'), text = " ", height = 3, width = 6, command = lambda: tictactoe(button6,5))
 button6.grid(row = 2, column = 2)
 
-button7 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button7,6))
+button7 = Button(frame, font = ('Arial 30 bold'), text = " ", height = 3, width = 6, command = lambda: tictactoe(button7,6))
 button7.grid(row = 3, column = 0)
 
-button8 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button8,7))
+button8 = Button(frame, font = ('Arial 30 bold'), text = " ", height = 3, width = 6, command = lambda: tictactoe(button8,7))
 button8.grid(row = 3, column = 1)
 
-button9 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button9,8))
+button9 = Button(frame, font = ('Arial 30 bold'), text = " ", height = 3, width = 6, command = lambda: tictactoe(button9,8))
 button9.grid(row = 3, column = 2)
 
 master.geometry('605x710+660+180')
@@ -123,6 +123,15 @@ def playerSelection():
         clearBoard()
         master.update()
         master.deiconify()
+
+def serverConnectionWindowSettings():
+    serverOptions = Toplevel()
+    serverOptions.title("Server Options")
+    serverOptions.minsize(250,100)
+    serverOptions.maxsize(250,100)
+    serverOptions.resizable(0,0)
+    serverOptions.geometry('250x100+800+400')
+    serverOptions.attributes("-topmost", True)
 
 def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
