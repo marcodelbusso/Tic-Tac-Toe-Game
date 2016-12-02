@@ -192,6 +192,6 @@ master.geometry('605x710+660+180')
 
 computerOrAI()
 
-master.iconbitmap('elicon.ico') #Changes the default window icon
 master.protocol("WM_DELETE_WINDOW", on_closing) #Generates an event for when the user presses the close button on the window
+master.iconbitmap('elicon.ico') #Changes the default window icon
 mainloop()
