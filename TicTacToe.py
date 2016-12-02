@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
+from time import sleep
+
+bclick = [True] #Value used to change between 'X' and 'O'. X is true, O is false.
 
 master = Tk()
 master.resizable(0,0) #Makes the window non-resizable
@@ -22,8 +25,6 @@ LabelO.pack(side = RIGHT, padx = 20) #Formatting
 xCurrentScore.set("X's Score:   " + str(xCurrentScoreList[0])) #Tells LabelX what to display in the GUI 
 oCurrentScore.set("O's Score:   " + str(oCurrentScoreList[0])) #Tells LabelO what to display in the GUI
 
-bclick = [True] #Value used to change between 'X' and 'O'. X is true, O is false.
-
 buttonsList = [" "," "," "," "," "," "," "," "," "] #Holds the
 
 def computerOrAI():
@@ -33,6 +34,7 @@ def computerOrAI():
     modeSelection.maxsize(320,120)
     modeSelection.resizable(0,0)
     modeSelection.geometry('320x120+800+400')
+    modeSelection.attributes("-topmost", True)
  
     msg = Label(modeSelection, text="Would you like to play against the computer", font = ('Arial 12'))
     msg.pack(pady = 5)
@@ -40,10 +42,10 @@ def computerOrAI():
     msg1 = Label(modeSelection, text="or another player?", font = ('Arial 12'))
     msg1.pack()
 
-    buttonAI = Button(modeSelection, text="Against the AI", font = ('Arial 15 bold'), command=  lambda: buttonAIDestruction())
+    buttonAI = Button(modeSelection, text="Against the AI", font = ('Arial 15 bold'), command = lambda: buttonAIDestruction())
     buttonAI.pack(side = LEFT, padx = 5)
 
-    buttonPlayer = Button(modeSelection, text="Another Player", font = ('Arial 15 bold'), command= lambda: buttonAIDestruction())
+    buttonPlayer = Button(modeSelection, text="Another Player", font = ('Arial 15 bold'), command = lambda: buttonAIDestruction())
     buttonPlayer.pack(side = RIGHT, padx = 5)
 
     def buttonAIDestruction():
@@ -57,15 +59,24 @@ def playerSelection():
     playerSelect.maxsize(250,100)
     playerSelect.resizable(0,0)
     playerSelect.geometry('250x100+800+400')
+    playerSelect.attributes("-topmost", True)
 
     msg = Label(playerSelect, text="Which player will start first?",  font = ('Arial 12'))
     msg.pack(pady = 10)
 
-    buttonX = Button(playerSelect, text="Player 'X'", font = ('Arial 15 bold'), command=playerSelect.destroy)
+    buttonX = Button(playerSelect, text="Player 'X'", font = ('Arial 15 bold'), command = lambda: xButtonClick())
     buttonX.pack(side = LEFT, padx = 5)
 
-    buttonO = Button(playerSelect, text="Player 'O'", font = ('Arial 15 bold'), command=playerSelect.destroy)
+    buttonO = Button(playerSelect, text="Player 'O'", font = ('Arial 15 bold'), command = lambda: oButtonClick())
     buttonO.pack(side = RIGHT, padx = 5)
+
+    def xButtonClick():
+        bclick[0] = True
+        playerSelect.destroy()
+
+    def oButtonClick():
+        bclick[0] = False
+        playerSelect.destroy()
 
 def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
@@ -177,9 +188,9 @@ button8.grid(row = 3, column = 1)
 button9 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button9,8))
 button9.grid(row = 3, column = 2)
 
-computerOrAI()
-
 master.geometry('605x710+660+180')
+
+computerOrAI()
 
 master.iconbitmap('elicon.ico') #Changes the default window icon
 master.protocol("WM_DELETE_WINDOW", on_closing) #Generates an event for when the user presses the close button on the window
