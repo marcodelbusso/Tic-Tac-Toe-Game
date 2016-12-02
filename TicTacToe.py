@@ -1,5 +1,6 @@
+import tkinter
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, Tk
 from time import sleep
 from random import randint
 
@@ -11,9 +12,6 @@ from random import randint
 ##        messages = c.poll()
 ##except davidclient.NotConnected:
 ##    pass
-
-    
-
 
 bclick = [True] #Value used to change between 'X' and 'O'. X is true, O is false.
 AISelectionBool = [False] #Value used to determine if player wishes to play against the AI in a later function
@@ -128,13 +126,21 @@ def playerSelection():
         bclick[0] = True
         playerSelect.destroy()
         clearBoard()
-        serverConnectionWindowSettings()
+        if AISelectionBool[0] == True:
+            master.update()
+            master.deiconify()
+        else:
+            serverConnectionWindowSettings()
 
     def oButtonClick():
         bclick[0] = False
         playerSelect.destroy()
         clearBoard()
-        serverConnectionWindowSettings()
+        if AISelectionBool[0] == True:
+            master.update()
+            master.deiconify()
+        else:
+            serverConnectionWindowSettings()
 
 def serverConnectionWindowSettings():
     serverOptions = Toplevel()
@@ -304,5 +310,5 @@ def clearBoard(): #Resets the board to a default state in the list and the actua
 computerOrAI()
 
 master.protocol("WM_DELETE_WINDOW", on_closing) #Generates an event for when the user presses the close button on the window
-master.iconbitmap('elicon.ico') #Changes the default window icon
-mainloop()
+#master.iconbitmap('elicon.ico') #Changes the default window icon
+master.mainloop()
