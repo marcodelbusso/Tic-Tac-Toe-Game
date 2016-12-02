@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 from time import sleep
+import random
 
 bclick = [True] #Value used to change between 'X' and 'O'. X is true, O is false.
 
@@ -8,13 +9,15 @@ master = Tk()
 
 master.withdraw()
 
+
 xCurrentScore = StringVar() #Label has to be updated with a textvariable, so score must be a string variable
 oCurrentScore = StringVar() #Label has to be updated with a textvariable, so score must be a string variable
 
 xCurrentScoreList = [0] #Stores X score value in an array so it can be updated from within a function
 oCurrentScoreList = [0] #Stores O score value in an array so it can be updated from within a function
 
-
+AISelectionBool = False
+        
 def mainBoard(button1Text,button2Text,button3Text,button4Text,button5Text,button6Text,button7Text,button8Text,button9Text):
     master.title("Tic Tac Toe") #Sets the title for the window
     master.resizable(0,0) #Makes the window non-resizable
@@ -79,7 +82,7 @@ def computerOrAI():
     msg1 = Label(modeSelection, text="or another player?", font = ('Arial 12'))
     msg1.pack()
 
-    buttonAI = Button(modeSelection, text="Against the AI", font = ('Arial 15 bold'), command = lambda: buttonAIDestruction())
+    buttonAI = Button(modeSelection, text="Against the AI", font = ('Arial 15 bold'), command = lambda: randomAI())
     buttonAI.pack(side = LEFT, padx = 5)
 
     buttonPlayer = Button(modeSelection, text="Another Player", font = ('Arial 15 bold'), command = lambda: buttonAIDestruction())
@@ -88,6 +91,11 @@ def computerOrAI():
     def buttonAIDestruction():
         modeSelection.destroy()
         playerSelection()
+
+    def randomAI():
+        AISelectionBool = True
+        modeSelection.destroy()
+        playerSelection()       
 
 def playerSelection():
     playerSelect = Toplevel()
@@ -127,12 +135,28 @@ def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
         master.destroy()
 
-def tictactoe(button, listValue): 
+def tictactoe(button, listValue):
+
+    def AIRunCheck():
+        if scoreChecker() == None:
+            return None
+        elif AISelectionBool == True:
+            randomButton = random.choice(buttonsList)
+        if randomButton != " ":
+            AIRunCheck()
+        if bclick[0] == True:
+            button["text"] =  "X"
+            bclick[0] = False
+        else:
+            button["text"] == "O"
+            bclick[0] = True
+        
     global bclick
     if buttonsList[listValue] == " " and bclick[0] == True:
         button["text"] = "X"
         buttonsList[listValue] = "X"
         bclick[0] = False
+        AIRunCheck()
         scoreChecker()
         print(buttonsList) #Debug
         print(bclick) #Debug
@@ -141,6 +165,7 @@ def tictactoe(button, listValue):
         button["text"] = "O"
         buttonsList[listValue] = "O"
         bclick[0] = True
+        AIRunCheck()
         scoreChecker()
         print(buttonsList) #Debug
         print(bclick) #Debug
@@ -184,6 +209,9 @@ def scoreChecker(): #Checks all possible combinations for a win
          master.withdraw()
          computerOrAI()
 
+    else:
+        return None
+
 def clearBoard(): #Resets the board to a default state in the list and the actual button text
     buttonsList[0] = " "
     buttonsList[1] = " "
@@ -199,5 +227,5 @@ def clearBoard(): #Resets the board to a default state in the list and the actua
 computerOrAI()
 
 master.protocol("WM_DELETE_WINDOW", on_closing) #Generates an event for when the user presses the close button on the window
-master.iconbitmap('elicon.ico') #Changes the default window icon
+##master.iconbitmap('elicon.ico') #Changes the default window icon
 mainloop()
