@@ -21,8 +21,10 @@ AISelectionBool = [False] #Value used to determine if player wishes to play agai
 master = Tk() #The main board frame
 master.withdraw() #Hides the main board so only the game type selection window is shown
 master.resizable(0,0) #Makes the window non-resizable
+master.minsize(500,600) #Makes the window un-resizable
+master.maxsize(500,600)
 master.attributes("-topmost", True)
-frame = Frame(master, width=3, height=576, bg="", colormap="new") #Formatting
+frame = Frame(master, bg="", colormap="new") #Formatting
 frame.pack()
 master.title("Tic Tac Toe") #Sets the title for the window
 
@@ -32,10 +34,10 @@ oCurrentScore = StringVar() #Label has to be updated with a textvariable, so sco
 xCurrentScoreList = [0] #Stores X score value in an array so it can be updated from within a function
 oCurrentScoreList = [0] #Stores O score value in an array so it can be updated from within a function
 
-LabelX = Label(textvariable = xCurrentScore,font = ('Arial 30')) #Displays the current score for X in the GUI
+LabelX = Label(textvariable = xCurrentScore,font = ('Arial 25')) #Displays the current score for X in the GUI
 LabelX.pack(side = LEFT, padx = 10) #Formatting
 
-LabelO = Label(textvariable = oCurrentScore,font = ('Arial 30')) #Displays the current score for O in the GUI
+LabelO = Label(textvariable = oCurrentScore,font = ('Arial 25')) #Displays the current score for O in the GUI
 LabelO.pack(side = RIGHT, padx = 20) #Formatting
 
 xCurrentScore.set("X's Score:   " + str(xCurrentScoreList[0])) #Tells LabelX what to display in the GUI 
@@ -102,7 +104,7 @@ def computerOrAI():
     def randomAI():
         AISelectionBool[0] = True
         modeSelection.destroy()
-        playerSelection()  
+        playerSelection()
 
 def playerSelection():
     playerSelect = Toplevel()
@@ -152,7 +154,7 @@ def serverConnectionWindowSettings():
     hostNameTxtBox.grid(row = 0, column = 1)
     portTxtBox.grid(row = 1, column = 1)
 
-    buttonSubmit = Button(serverOptions, text="Submit", font = ('Arial 10 bold'), command = lambda: buttonClick()).grid(row = 3, column = 0)
+    buttonSubmit = Button(serverOptions, text="Submit", font = ('Arial 10 bold'), command = lambda: buttonClick()).grid(row = 3, column = 1)
 
     def buttonClick():
         #Server settings connection code
