@@ -109,11 +109,11 @@ def scoreChecker(): #Checks all possible combinations for a win
          buttonsList[2] == "X" and buttonsList[4] == "X" and buttonsList[6] == "X" or
          buttonsList[1] == "X" and buttonsList[4] == "X" and buttonsList[7] == "X" or
          buttonsList[2] == "X" and buttonsList[5] == "X" and buttonsList[8] == "X" ):
-         bclick[0] = True #Changes the state so it becomes O's turn
          messagebox.showinfo("THE WINNER IS X","PLAYER X WON THE GAME")
          xCurrentScoreList[0] = xCurrentScoreList[0] + 1
          clearBoard()
          xCurrentScore.set("X's Score:   " + str(xCurrentScoreList[0]))
+         computerOrAI()
          
     elif(buttonsList[0] == "O" and buttonsList[1] == "O" and buttonsList[2] == "O" or
         buttonsList[0] == "O" and buttonsList[4] == "O" and buttonsList[8] == "O" or
@@ -123,11 +123,11 @@ def scoreChecker(): #Checks all possible combinations for a win
         buttonsList[2] == "O" and buttonsList[4] == "O" and buttonsList[6] == "O" or
         buttonsList[1] == "O" and buttonsList[4] == "O" and buttonsList[7] == "O" or
         buttonsList[2] == "O" and buttonsList[5] == "O" and buttonsList[8] == "O" ):
-        bclick[0] = True #Changes the state so it becomes X's turn
         messagebox.showinfo("THE WINNER IS O","PLAYER O WON THE GAME")
         oCurrentScoreList[0] = oCurrentScoreList[0] + 1
         clearBoard()
         oCurrentScore.set("O's Score:   " + str(oCurrentScoreList[0]))
+        computerOrAI()
          
     elif((buttonsList[0] == "O" or buttonsList[0] == "X") and (buttonsList[1] == "O" or
          buttonsList[1] == "X") and (buttonsList[2] == "O" or buttonsList[2] == "X") and
@@ -135,9 +135,9 @@ def scoreChecker(): #Checks all possible combinations for a win
          buttonsList[4] == "X") and (buttonsList[5] == "O" or buttonsList[5] == "X") and
          (buttonsList[6] == "O" or buttonsList[6] == "X") and (buttonsList[7] == "O" or
          buttonsList[7] == "X") and (buttonsList[8] == "O" or buttonsList[8] == "X") ):
-         bclick[0] = True #Resets the state back to X as the game is restarted
          messagebox.showinfo("NOBODY WINS","THE GAME IS A TIE")
          clearBoard()
+         computerOrAI()
 
 def clearBoard(): #Resets the board to a default state in the list and the actual button text
     buttonsList[0] = " "
