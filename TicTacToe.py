@@ -3,6 +3,18 @@ from tkinter import messagebox
 from time import sleep
 from random import randint
 
+##import davidclient
+##c = davidclient.Client()
+##
+##try:
+##    while True:
+##        messages = c.poll()
+##except davidclient.NotConnected:
+##    pass
+
+    
+
+
 bclick = [True] #Value used to change between 'X' and 'O'. X is true, O is false.
 AISelectionBool = [False] #Value used to determine if player wishes to play against the AI in a later function
 
@@ -114,24 +126,38 @@ def playerSelection():
         bclick[0] = True
         playerSelect.destroy()
         clearBoard()
-        master.update()
-        master.deiconify()
+        serverConnectionWindowSettings()
 
     def oButtonClick():
         bclick[0] = False
         playerSelect.destroy()
         clearBoard()
-        master.update()
-        master.deiconify()
+        serverConnectionWindowSettings()
 
 def serverConnectionWindowSettings():
     serverOptions = Toplevel()
-    serverOptions.title("Server Options")
-    serverOptions.minsize(250,100)
-    serverOptions.maxsize(250,100)
+    serverOptions.title("Server Op's")
+    serverOptions.minsize(200,80)
+    serverOptions.maxsize(200,80)
     serverOptions.resizable(0,0)
-    serverOptions.geometry('250x100+800+400')
+    serverOptions.geometry('200x80+800+400')
     serverOptions.attributes("-topmost", True)
+
+    hostNameLabel = Label(serverOptions, text="Host Name", font = ('Arial 10 bold')).grid(row=0)
+    portLabel = Label(serverOptions, text="Port          ", font = ('Arial 10 bold')).grid(row=1)
+
+    hostNameTxtBox = Entry(serverOptions)
+    portTxtBox = Entry(serverOptions)
+
+    hostNameTxtBox.grid(row = 0, column = 1)
+    portTxtBox.grid(row = 1, column = 1)
+
+    buttonSubmit = Button(serverOptions, text="Submit", font = ('Arial 10 bold'), command = lambda: buttonClick()).grid(row = 3, column = 0)
+
+    def buttonClick():
+        #Server settings connection code
+        master.update()
+        master.deiconify()
 
 def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
