@@ -10,25 +10,6 @@ master.title("Tic Tac Toe") #Sets the title for the window
 xCurrentScore = StringVar() #Label has to be updated with a textvariable, so score must be a string variable
 oCurrentScore = StringVar() #Label has to be updated with a textvariable, so score must be a string variable
 
-ws = winfo_screenwidth()
-hs = winfo_screenheight()
-
-playerSelect = Toplevel()
-playerSelect.title("X/O")
-playerSelect.minsize(150,80)
-playerSelect.maxsize(150,80)
-playerSelect.resizable(0,0)
-player
-
-msg = Label(playerSelect, text="Which player will start first?")
-msg.pack(pady = 10)
-
-buttonX = Button(playerSelect, text="Player 'X'", command=playerSelect.destroy)
-buttonX.pack(side = LEFT, padx = 5)
-
-buttonO = Button(playerSelect, text="Player 'O'", command=playerSelect.destroy)
-buttonO.pack(side = RIGHT, padx = 5)
-
 xCurrentScoreList = [0] #Stores X score value in an array so it can be updated from within a function
 oCurrentScoreList = [0] #Stores O score value in an array so it can be updated from within a function
 
@@ -43,7 +24,48 @@ oCurrentScore.set("O's Score:   " + str(oCurrentScoreList[0])) #Tells LabelO wha
 
 bclick = [True] #Value used to change between 'X' and 'O'. X is true, O is false.
 
-buttonsList = [" "," "," "," "," "," "," "," "," "] #Holds the 
+buttonsList = [" "," "," "," "," "," "," "," "," "] #Holds the
+
+def computerOrAI():
+    modeSelection = Toplevel()
+    modeSelection.title("Choose Game Type")
+    modeSelection.minsize(320,120)
+    modeSelection.maxsize(320,120)
+    modeSelection.resizable(0,0)
+    modeSelection.geometry('320x120+800+400')
+ 
+    msg = Label(modeSelection, text="Would you like to play against the computer", font = ('Arial 12'))
+    msg.pack(pady = 5)
+
+    msg1 = Label(modeSelection, text="or another player?", font = ('Arial 12'))
+    msg1.pack()
+
+    buttonAI = Button(modeSelection, text="Against the AI", font = ('Arial 15 bold'), command=  lambda: buttonAIDestruction())
+    buttonAI.pack(side = LEFT, padx = 5)
+
+    buttonPlayer = Button(modeSelection, text="Another Player", font = ('Arial 15 bold'), command= lambda: buttonAIDestruction())
+    buttonPlayer.pack(side = RIGHT, padx = 5)
+
+    def buttonAIDestruction():
+        modeSelection.destroy()
+        playerSelection()
+
+def playerSelection():
+    playerSelect = Toplevel()
+    playerSelect.title("X/O")
+    playerSelect.minsize(250,100)
+    playerSelect.maxsize(250,100)
+    playerSelect.resizable(0,0)
+    playerSelect.geometry('250x100+800+400')
+
+    msg = Label(playerSelect, text="Which player will start first?",  font = ('Arial 12'))
+    msg.pack(pady = 10)
+
+    buttonX = Button(playerSelect, text="Player 'X'", font = ('Arial 15 bold'), command=playerSelect.destroy)
+    buttonX.pack(side = LEFT, padx = 5)
+
+    buttonO = Button(playerSelect, text="Player 'O'", font = ('Arial 15 bold'), command=playerSelect.destroy)
+    buttonO.pack(side = RIGHT, padx = 5)
 
 def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
@@ -154,6 +176,10 @@ button8.grid(row = 3, column = 1)
 
 button9 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button9,8))
 button9.grid(row = 3, column = 2)
+
+computerOrAI()
+
+master.geometry('605x710+660+180')
 
 master.iconbitmap('elicon.ico') #Changes the default window icon
 master.protocol("WM_DELETE_WINDOW", on_closing) #Generates an event for when the user presses the close button on the window
