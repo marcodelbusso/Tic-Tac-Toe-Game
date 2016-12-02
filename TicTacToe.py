@@ -1,14 +1,16 @@
 from tkinter import *
 from tkinter import messagebox
 from time import sleep
+from random import randint
 
 bclick = [True] #Value used to change between 'X' and 'O'. X is true, O is false.
 AISelectionBool = [False] #Value used to determine if player wishes to play against the AI in a later function
 
-master = Tk()
-master.withdraw()
+master = Tk() #The main board frame
+master.withdraw() #Hides the main board so only the game type selection window is shown
 master.resizable(0,0) #Makes the window non-resizable
-frame = Frame(master, width=3, height=576, bg="", colormap="new")
+master.attributes("-topmost", True)
+frame = Frame(master, width=3, height=576, bg="", colormap="new") #Formatting
 frame.pack()
 master.title("Tic Tac Toe") #Sets the title for the window
 
@@ -27,16 +29,47 @@ LabelO.pack(side = RIGHT, padx = 20) #Formatting
 xCurrentScore.set("X's Score:   " + str(xCurrentScoreList[0])) #Tells LabelX what to display in the GUI 
 oCurrentScore.set("O's Score:   " + str(oCurrentScoreList[0])) #Tells LabelO what to display in the GUI
 
-buttonsList = [" "," "," "," "," "," "," "," "," "] #Holds the
+buttonsList = [" "," "," "," "," "," "," "," "," "] #Holds the value for each button to be used for game win check comparisons
+
+#Defining each button to be generated with tkinter
+
+button1 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button1,0))
+button1.grid(row = 1, column = 0)
+
+button2 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button2,1))
+button2.grid(row = 1, column = 1)
+
+button3 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button3,2))
+button3.grid(row = 1, column = 2)
+
+button4 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button4,3))
+button4.grid(row = 2, column = 0)
+
+button5 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button5,4))
+button5.grid(row = 2, column = 1)
+
+button6 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button6,5))
+button6.grid(row = 2, column = 2)
+
+button7 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button7,6))
+button7.grid(row = 3, column = 0)
+
+button8 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button8,7))
+button8.grid(row = 3, column = 1)
+
+button9 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button9,8))
+button9.grid(row = 3, column = 2)
+
+master.geometry('605x710+660+180')
 
 def computerOrAI():
     modeSelection = Toplevel()
     modeSelection.title("Choose Game Type")
-    modeSelection.minsize(320,120)
+    modeSelection.minsize(320,120) #Makes the window un-resizable
     modeSelection.maxsize(320,120)
-    modeSelection.resizable(0,0)
+    modeSelection.resizable(0,0) #Disables the 'Maximise' button
     modeSelection.geometry('320x120+800+400')
-    modeSelection.attributes("-topmost", True)
+    modeSelection.attributes("-topmost", True) #Keeps the window on the top
  
     msg = Label(modeSelection, text="Would you like to play against the computer", font = ('Arial 12'))
     msg.pack(pady = 5)
@@ -97,22 +130,56 @@ def on_closing():
 
 def tictactoe(button, listValue):
 
-    def AIRunCheck():
-        if scoreChecker() == None:
-            return None
-        elif AISelectionBool == True:
-            randNum = randint(0,8)
-            randomButton = buttonsList[randNum]
-        if randomButton != " ":
-            AIRunCheck()
-        if bclick[0] == True:
-             =  "X"
-            bclick[0] = False
-        else:
-            button["text"] == "O"
-            bclick[0] = True
-            
     global bclick
+
+    def AIRunCheck():
+
+        def buttonCheckAssignment(letter, number):
+            if number == 0:
+                button1["text"] = letter
+                buttonsList[0] = letter
+            elif number == 1:
+                button2["text"] = letter
+                buttonsList[1] = letter
+            elif number == 2:
+                button3["text"] = letter
+                buttonsList[2] = letter
+            elif number == 3:
+                button4["text"] = letter
+                buttonsList[3] = letter
+            elif number == 4:
+                button5["text"] = letter
+                buttonsList[4] = letter
+            elif number == 5:
+                button6["text"] = letter
+                buttonsList[5] = letter
+            elif number == 6:
+                button7["text"] = letter
+                buttonsList[6] = letter
+            elif number == 7:
+                button8["text"] = letter
+                buttonsList[7] = letter
+            elif number == 8:
+                button9["text"] = letter
+                buttonsList[8] = letter
+
+        def buttonNumAssignment(buttonValU):
+            if bclick[0] == True:
+                buttonCheckAssignment("X", buttonValU)
+                bclick[0] = False
+            else:
+                buttonCheckAssignment("O", buttonValU)
+                bclick[0] = True
+            
+        if scoreChecker() == None:            
+            if AISelectionBool[0] == True:
+                randNum = randint(0,8)
+                randomButton = buttonsList[randNum]              
+                if randomButton != " ":
+                    AIRunCheck()
+                else:
+                    buttonNumAssignment(randNum)
+                        
     if buttonsList[listValue] == " " and bclick[0] == True:
         button["text"] = "X"
         buttonsList[listValue] = "X"
@@ -144,6 +211,7 @@ def scoreChecker(): #Checks all possible combinations for a win
          xCurrentScoreList[0] = xCurrentScoreList[0] + 1
          clearBoard()
          xCurrentScore.set("X's Score:   " + str(xCurrentScoreList[0]))
+         master.withdraw()
          computerOrAI()
          
     elif(buttonsList[0] == "O" and buttonsList[1] == "O" and buttonsList[2] == "O" or
@@ -158,6 +226,7 @@ def scoreChecker(): #Checks all possible combinations for a win
         oCurrentScoreList[0] = oCurrentScoreList[0] + 1
         clearBoard()
         oCurrentScore.set("O's Score:   " + str(oCurrentScoreList[0]))
+        master.withdraw()
         computerOrAI()
          
     elif((buttonsList[0] == "O" or buttonsList[0] == "X") and (buttonsList[1] == "O" or
@@ -168,7 +237,11 @@ def scoreChecker(): #Checks all possible combinations for a win
          buttonsList[7] == "X") and (buttonsList[8] == "O" or buttonsList[8] == "X") ):
          messagebox.showinfo("NOBODY WINS","THE GAME IS A TIE")
          clearBoard()
+         master.withdraw()
          computerOrAI()
+
+    else:
+        return None
 
 def clearBoard(): #Resets the board to a default state in the list and the actual button text
     buttonsList[0] = " "
@@ -189,37 +262,6 @@ def clearBoard(): #Resets the board to a default state in the list and the actua
     button7["text"] = " "
     button8["text"] = " "
     button9["text"] = " "
-
-#Defining each button to be generated with tkinter
-
-button1 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button1,0))
-button1.grid(row = 1, column = 0)
-
-button2 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button2,1))
-button2.grid(row = 1, column = 1)
-
-button3 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button3,2))
-button3.grid(row = 1, column = 2)
-
-button4 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button4,3))
-button4.grid(row = 2, column = 0)
-
-button5 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button5,4))
-button5.grid(row = 2, column = 1)
-
-button6 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button6,5))
-button6.grid(row = 2, column = 2)
-
-button7 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button7,6))
-button7.grid(row = 3, column = 0)
-
-button8 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button8,7))
-button8.grid(row = 3, column = 1)
-
-button9 = Button(frame, text = " ", font = ('Arial 30 bold'), height = 4, width = 8, command = lambda: tictactoe(button9,8))
-button9.grid(row = 3, column = 2)
-
-master.geometry('605x710+660+180')
 
 computerOrAI()
 
