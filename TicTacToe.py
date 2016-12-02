@@ -57,8 +57,10 @@ def scoreChecker():
          buttonsList[2] == "X" and buttonsList[5] == "X" and buttonsList[8] == "X" ):
          bclick[0] = True
          messagebox.showinfo("THE WINNER IS X","PLAYER X WON THE GAME")
-         xCurrentScoreList[0] + 1
+         xCurrentScoreList[0] = xCurrentScoreList[0] + 1
+         print(xCurrentScoreList)
          clearBoard()
+         xCurrentScore.set("X's Score:   " + str(xCurrentScoreList[0]))
          print(xCurrentScore.get())
          
     elif(buttonsList[0] == "O" and buttonsList[1] == "O" and buttonsList[2] == "O" or
@@ -71,7 +73,10 @@ def scoreChecker():
         buttonsList[2] == "O" and buttonsList[5] == "O" and buttonsList[8] == "O" ):
         bclick[0] = True
         messagebox.showinfo("THE WINNER IS O","PLAYER O WON THE GAME")
+        oCurrentScoreList[0] = oCurrentScoreList[0] + 1
         clearBoard()
+        oCurrentScore.set("O's Score:   " + str(oCurrentScoreList[0]))
+        print(oCurrentScore.get())
          
     elif((buttonsList[0] == "O" or buttonsList[0] == "X") and (buttonsList[1] == "O" or
          buttonsList[1] == "X") and (buttonsList[2] == "O" or buttonsList[2] == "X") and
