@@ -7,24 +7,43 @@ frame = Frame(master, width=3, height=576, bg="", colormap="new")
 frame.pack()
 master.title("Tic Tac Toe") #Sets the title for the window
 
-xCurrentScore = StringVar()
-oCurrentScore = StringVar()
+xCurrentScore = StringVar() #Label has to be updated with a textvariable, so score must be a string variable
+oCurrentScore = StringVar() #Label has to be updated with a textvariable, so score must be a string variable
 
-xCurrentScoreList = [0]
-oCurrentScoreList = [0]
+ws = winfo_screenwidth()
+hs = winfo_screenheight()
 
-LabelX = Label(textvariable = xCurrentScore,font = ('Arial 30'))
-LabelX.pack(side = LEFT, padx = 10)
+playerSelect = Toplevel()
+playerSelect.title("X/O")
+playerSelect.minsize(150,80)
+playerSelect.maxsize(150,80)
+playerSelect.resizable(0,0)
+player
 
-LabelO = Label(textvariable = oCurrentScore,font = ('Arial 30')) 
-LabelO.pack(side = RIGHT, padx = 20)
+msg = Label(playerSelect, text="Which player will start first?")
+msg.pack(pady = 10)
 
-xCurrentScore.set("X's Score:   " + str(xCurrentScoreList[0]))
-oCurrentScore.set("O's Score:   " + str(oCurrentScoreList[0]))
+buttonX = Button(playerSelect, text="Player 'X'", command=playerSelect.destroy)
+buttonX.pack(side = LEFT, padx = 5)
+
+buttonO = Button(playerSelect, text="Player 'O'", command=playerSelect.destroy)
+buttonO.pack(side = RIGHT, padx = 5)
+
+xCurrentScoreList = [0] #Stores X score value in an array so it can be updated from within a function
+oCurrentScoreList = [0] #Stores O score value in an array so it can be updated from within a function
+
+LabelX = Label(textvariable = xCurrentScore,font = ('Arial 30')) #Displays the current score for X in the GUI
+LabelX.pack(side = LEFT, padx = 10) #Formatting
+
+LabelO = Label(textvariable = oCurrentScore,font = ('Arial 30')) #Displays the current score for O in the GUI
+LabelO.pack(side = RIGHT, padx = 20) #Formatting
+
+xCurrentScore.set("X's Score:   " + str(xCurrentScoreList[0])) #Tells LabelX what to display in the GUI 
+oCurrentScore.set("O's Score:   " + str(oCurrentScoreList[0])) #Tells LabelO what to display in the GUI
 
 bclick = [True] #Value used to change between 'X' and 'O'. X is true, O is false.
 
-buttonsList = [" "," "," "," "," "," "," "," "," "]
+buttonsList = [" "," "," "," "," "," "," "," "," "] #Holds the 
 
 def on_closing():
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
@@ -37,16 +56,16 @@ def tictactoe(button, listValue):
         buttonsList[listValue] = "X"
         bclick[0] = False
         scoreChecker()
-        print(buttonsList)
-        print(bclick)
+        print(buttonsList) #Debug
+        print(bclick) #Debug
         
-    elif buttonsList[listValue] == " " and bclick[0] == False:
+    elif buttonsList[listValue] == " " and bclick[0] == False: #Checks if the button has a value in it or not
         button["text"] = "O"
         buttonsList[listValue] = "O"
         bclick[0] = True
         scoreChecker()
-        print(buttonsList)
-        print(bclick)
+        print(buttonsList) #Debug
+        print(bclick) #Debug
 
 def scoreChecker(): #Checks all possible combinations for a win
     if(buttonsList[0] == "X" and buttonsList[1] == "X" and buttonsList[2] == "X" or
