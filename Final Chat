@@ -1,0 +1,118 @@
+from tkinter import *
+import tkinter as tk
+import socket, select
+
+root = Tk()
+
+def createChatWindow(root):
+
+    def buttonpress():
+        messageText = userInput.get(1.0,END)
+        sendMessage(messageText)
+
+    def sendMessage(message):
+        chatHistory.configure(state = "normal")
+        chatHistory.insert(END,'Message: ' + message)
+        chatHistory.configure(state = "disabled")
+        userInput.delete(1.0, END)
+
+    def onReturnKey(event):
+        messageText = userInput.get(1.0,END)
+        sendMessage(messageText[0:len(messageText)-1])
+
+    global chatHistory   
+    
+    chatHistory = tk.Text(root, font = ('Arial 12'), width = 27)
+    userInput = Text(root, font = ('Arial 12'), width = 25, height = 2)
+    sendButton = Button(root, height = 1, font = ('Arial 14'),text = "SEND",command = lambda: buttonpress())
+    
+    chatHistory.grid(row = 0, sticky = W)
+    userInput.grid(row = 1, column = 0, sticky = W)
+    sendButton.grid(row = 1, sticky = E)
+
+    chatHistory.configure(state = "disabled")
+    chatHistory.bind("<1>", lambda even: chatHistory.focus_set())
+    root.bind('<Return>', onReturnKey)
+
+
+
+def clean_message(msgbytes):
+    return msgbytes.decode('utf-8').strip('\r\n')
+        
+def prepare_message(msg):
+        msgbytes += '\r\n'
+        return msgbytes.encode('utf-8')
+
+class chatServer:
+
+    def __init__ (self, root, port = 23334):
+            self.root = root
+            self.connections = []
+            self.port = port
+
+            self.server = socket.socket()
+            self.server.bind(('', port))
+            self.server.listen(2)
+
+    def shutdown(self):
+
+            for c in self.connections:
+                    c.close()
+
+            self.server.shutdown(1)
+            self.server.close()
+
+    def poll(self):
+            global chatHistory
+        
+            read, write, error = select.select(self.connections+[self.server], self.connections, self.connections, 0 )
+
+            for conn in read:
+                    if conn is self.server:
+                            c, addr = conn.accept()
+                            self.connections.append(c)
+                            
+                            chatHistory.configure(state = "normal")
+                            chatHistory.insert(END,'Connection Received {} \n' .format(addr) )
+                            chatHistory.configure(state = "disabled")
+                        
+                    else:
+                            msgbytes = conn.recv(1024)
+
+                            if not msgbytes:
+                                    chatHistory.configure(state = "normal")
+                                    chatHistory.insert(END,'Disconnected from Server \n')
+                                    chatHistory.configure(state = "disabled")
+
+                                    if conn in write: write.remove(conn)
+                                    self.connections.remove(conn)
+
+                                    conn.close()
+                            else:
+                                    chatHistory.configure(state = "normal")
+                                    chatHistory.insert(END,'Message: {} \n'. format(clean_message(msgbytes)))
+                                    chatHistory.configure(state = "disabled")
+                                    for c in write:
+                                            if c is not conn:
+                                                    c.send(msgbytes)
+
+def doOften():
+    message = c.poll()    
+    root.after(100,doOften)
+
+def main():
+    global c
+    c = chatServer(root)
+
+    root.title("Tic Tac Toe Chat")
+    root.geometry ('245x473+800+400')
+    root.resizable(width = False, height = False)
+    
+    createChatWindow(root)
+
+    root.after(100,doOften)
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
